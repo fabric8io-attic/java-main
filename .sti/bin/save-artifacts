@@ -1,0 +1,10 @@
+#!/bin/sh -e
+
+pushd ${HOME} > /dev/null
+
+echo "Saving maven repository : ${HOME}/.m2"
+# /opt/maven/repository is the maven repo dir
+tar cf - ./.m2
+
+popd > /dev/null
+echo "Artifacts Saved"

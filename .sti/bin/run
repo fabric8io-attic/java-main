@@ -1,0 +1,14 @@
+#!/bin/bash
+
+DEPLOY_DIR="/opt/jboss/deploy"
+
+pushd ${DEPLOY_DIR} > /dev/null
+APP_JAR=`ls *.jar`
+popd > /dev/null
+CLASSPATH="$DEPLOY_DIR/$APP_JAR"
+
+for dependency in `ls $DEPLOY_DIR/dependency/*.jar`; do
+	CLASSPATH="$CLASSPATH:$dependency"
+done
+
+java -cp $CLASSPATH $JAVA_MAIN
