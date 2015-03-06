@@ -2,9 +2,9 @@
 
 pushd ${HOME} > /dev/null
 
-echo "Saving maven repository : ${HOME}/.m2"
 # /opt/maven/repository is the maven repo dir
-tar cf - ./.m2
+if [ -d ".m2" ]; then
+   tar cf - ./.m2
+fi
 
 popd > /dev/null
-echo "Artifacts Saved"
