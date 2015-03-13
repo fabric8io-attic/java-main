@@ -6,7 +6,9 @@ pushd ${DEPLOY_DIR} > /dev/null
 APP_JAR=`ls *.jar`
 popd > /dev/null
 CLASSPATH="$DEPLOY_DIR/$APP_JAR"
-
+if [ -z "$JAVA_MAIN" ] && [ -f $DEPLOY_DIR/JAVA_MAIN_CLASS ]; then
+	JAVA_MAIN=`cat $DEPLOY_DIR/JAVA_MAIN_CLASS`
+fi
 for dependency in `ls $DEPLOY_DIR/dependency/*.jar`; do
 	CLASSPATH="$CLASSPATH:$dependency"
 done
