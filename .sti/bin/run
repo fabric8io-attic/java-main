@@ -1,5 +1,31 @@
 #!/bin/bash
 
+function jolokia_opts {
+  #!/bin/bash
+  dir=${JOLOKIA_DIR:-/opt/jolokia}
+  if [ -z ${JOLOKIA_OFF+x} ]; then
+    opts="-javaagent:$dir/jolokia.jar"
+    config=${JOLOKIA_CONFIG:-$dir/jolokia.properties}
+    if [ -f "$JOLOKIA_CONFIG" ]; then
+      # Configuration takes precedence
+      opts="${opts}=config=${JOLOKIA_CONFIG}"
+    else
+      # Direct options only if no configuration is found
+      opts="${opts}=host=${JOLOKIA_HOST:-*},agentId=${JOLOKIA_ID:-$HOSTNAME}"
+      if [ -n "$JOLOKIA_PORT" ]; then
+        opts="${opts},port=${JOLOKIA_PORT}"
+      fi
+      if [ -n "$JOLOKIA_USER" ]; then
+        opts="${opts},user=${JOLOKIA_USER}"
+      fi
+      if [ -n "$JOLOKIA_PASSWORD" ]; then
+        opts="${opts},password=${JOLOKIA_PASSWORD}"
+      fi
+    fi
+    echo $opts
+  fi
+}
+
 DEPLOY_DIR="/opt/jboss/deploy"
 
 pushd ${DEPLOY_DIR} > /dev/null
@@ -13,4 +39,4 @@ for dependency in `ls $DEPLOY_DIR/dependency/*.jar`; do
 	CLASSPATH="$CLASSPATH:$dependency"
 done
 
-java -cp $CLASSPATH $JAVA_MAIN
+java $(jolokia_opts) -cp $CLASSPATH $JAVA_MAIN
