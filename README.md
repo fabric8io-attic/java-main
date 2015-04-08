@@ -40,6 +40,8 @@ A more complete version of the previous example would then be:
 	sti build -e "OUTPUT_DIR=path/to/module/target,MAVEN_ARGS=install -pl some.groupId:some.artifactId -am" <git repo url> fabric8/java-main <target image name>
 
 
+### Real world examples:
 
+	sti build git@github.com:fabric8io/quickstarts.git fabric8/java-main fabric8/camel-cdi-mq -e "OUTPUT_DIR=quickstarts/java/camel-cdi-mq/target,MAVEN_ARGS=package dependency:copy-dependencies -Popenshift -DskipTests -pl io.fabric8.jube.images.fabric8:quickstart-java-camel-cdi-mq -amd" --loglevel=5 -r project-2.0.40
 
 
