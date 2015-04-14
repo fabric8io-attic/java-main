@@ -18,6 +18,12 @@ function restore_saved_artifacts() {
 LOCAL_SOURCE_DIR=${HOME}/source
 mkdir -p $LOCAL_SOURCE_DIR
 
+# The dir that contains the build output
+if [ -z "$OUTPUT_DIR" ]; then
+  export OUTPUT_DIR="$LOCAL_SOURCE_DIR/target"
+elif [[ $OUTPUT_DIR != /* ]]; then
+  export OUTPUT_DIR="$LOCAL_SOURCE_DIR/$OUTPUT_DIR"
+fi
 
 # Output will result in /opt/jboss/deploy folder
 DEPLOY_DIR=/opt/jboss/deploy
@@ -52,12 +58,6 @@ if [ -f "$LOCAL_SOURCE_DIR/pom.xml" ]; then
     exit $ERR
   fi
 
-  # The dir that contains the build output
-  if [ -z "$OUTPUT_DIR" ]; then
-    export OUTPUT_DIR="$LOCAL_SOURCE_DIR/target"
-  elif [[ $OUTPUT_DIR != /* ]]; then
-    export OUTPUT_DIR="$LOCAL_SOURCE_DIR/$OUTPUT_DIR"
-  fi
 
   echo "Copying built artifacts from $OUTPUT_DIR into $DEPLOY_DIR for later deployment..."
   popd &> /dev/null
