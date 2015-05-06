@@ -35,8 +35,13 @@ CLASSPATH="$DEPLOY_DIR/$APP_JAR"
 if [ -z "$JAVA_MAIN" ] && [ -f $DEPLOY_DIR/JAVA_MAIN_CLASS ]; then
 	JAVA_MAIN=`cat $DEPLOY_DIR/JAVA_MAIN_CLASS`
 fi
-for dependency in `ls $DEPLOY_DIR/dependency/*.jar`; do
-	CLASSPATH="$CLASSPATH:$dependency"
-done
+if [ -z "$JAVA_MAIN" ]; then
+	JAVA_EXEC_OPTS="-jar $DEPLOY_DIR/$APP_JAR"
+else
+	for dependency in `ls $DEPLOY_DIR/dependency/*.jar`; do
+		CLASSPATH="$CLASSPATH:$dependency"
+	done
+	JAVA_EXEC_OPTS="-cp $CLASSPATH $JAVA_MAIN"
+fi
 
-java $(jolokia_opts) -cp $CLASSPATH $JAVA_MAIN
+java $(jolokia_opts) $JAVA_EXEC_OPTS
