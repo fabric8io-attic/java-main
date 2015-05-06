@@ -50,7 +50,7 @@ if [ -f "$LOCAL_SOURCE_DIR/pom.xml" ]; then
   mvn --version
   mvn $MAVEN_ARGS -X > .mvn.out
   cat .mvn.out | grep "properties used" > .mvn.props
-  sed 's/.*docker.env.MAIN=\([^, ]*\),.*/\1/' .mvn.props | head -n 1 > $OUTPUT_DIR/JAVA_MAIN_CLASS
+  sed -n 's/.*docker.env.MAIN=\([^, ]*\),.*/\1/p' .mvn.props | head -n 1 > $OUTPUT_DIR/JAVA_MAIN_CLASS
 
   ERR=$?
   if [ $ERR -ne 0 ]; then
