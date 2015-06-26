@@ -48,7 +48,7 @@ if [ -f "$LOCAL_SOURCE_DIR/pom.xml" ]; then
   echo "Found pom.xml... attempting to build with 'mvn ${MAVEN_ARGS}'"
 
   mvn --version
-  mvn $MAVEN_ARGS -X > .mvn.out
+  mvn $MAVEN_ARGS -X | tee .mvn.out
   cat .mvn.out | grep "properties used" > .mvn.props
   sed 's/.*docker.env.MAIN=\([^, ]*\),.*/\1/' .mvn.props | head -n 1 > $OUTPUT_DIR/JAVA_MAIN_CLASS
 
