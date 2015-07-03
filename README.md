@@ -23,25 +23,30 @@ It may be possible that the maven build needs to be customized. For example:
 - To skip tests.
 - To provide custom configuration to the build".
 - To build specific modules inside a multimodule project".
+- To add debug level logging to the Maven build
 
-In any case you can pass the MAVEN_ARGS environmental variable. 
+The `MAVEN_ARGS` environment variable can be set to change the behaviour. By
+default `MAVEN_ARGS` is set to:
 
-In the example below we tell maven to just build the project with groupId "some.groupId" and artifactId "some.artifactId" and all its module dependencies.
+  package dependency:copy-dependencies -DskipTests -e
+
+You can override the `MAVEN_ARGS` like in the example below we tell maven to just build the project with groupId "some.groupId" and artifactId "some.artifactId" and all its module dependencies.
 
 	sti build -e "MAVEN_ARGS=install -pl some.groupId:some.artifactId -am" <git repo url> fabric8/java-main <target image name>
-	
+
+You can also just override the `MAVEN_DEBUG_ARGS` environment variable with:
+
+  -e "MAVEN_DEBUG_ARGS=-X"
 
 ## Working with multimodule projects
 The example above is pretty handy for multimodule projects. An other option really usefull is the OUTPUT_DIR environmental variable. This variable defines where in the source tree the output will be generated. By default the image assumes ./target. If its an other directory we need to specify the option.
 
 A more complete version of the previous example would then be:
 
-
 	sti build -e "OUTPUT_DIR=path/to/module/target,MAVEN_ARGS=install -pl some.groupId:some.artifactId -am" <git repo url> fabric8/java-main <target image name>
-
 
 ### Real world examples:
 
-	sti build git@github.com:fabric8io/quickstarts.git fabric8/java-main fabric8/camel-cdi-mq -e "OUTPUT_DIR=quickstarts/java/camel-cdi-mq/target,MAVEN_ARGS=package dependency:copy-dependencies -Popenshift -DskipTests -pl io.fabric8.jube.images.fabric8:quickstart-java-camel-cdi-mq -amd" --loglevel=5 -r project-2.0.40
+	sti build git://github.com/fabric8io/quickstarts.git fabric8/java-main fabric8/camel-cdi-mq -e "OUTPUT_DIR=quickstarts/java/camel-cdi-mq/target,MAVEN_ARGS=package dependency:copy-dependencies -Popenshift -DskipTests -pl io.fabric8.jube.images.fabric8:quickstart-java-camel-cdi-mq -amd" --loglevel=5 -r project-2.0.40
 
 
