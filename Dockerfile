@@ -1,7 +1,7 @@
 FROM fabric8/base-sti
 
 MAINTAINER iocanel@gmail.com
-LABEL io.s2i.scripts-url https://raw.githubusercontent.com/fabric8io/java-main/master/.sti/bin/
+LABEL io.openshift.s2i.scripts-url https://raw.githubusercontent.com/fabric8io/java-main/master/.sti/bin/
 
 USER root
 
