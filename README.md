@@ -37,7 +37,7 @@ You can override the `MAVEN_ARGS` like in the example below we tell maven to jus
 
 You can also just override the `MAVEN_DEBUG_ARGS` environment variable with:
 
-  -e "MAVEN_DEBUG_ARGS=-X"
+    -e "MAVEN_DEBUG_ARGS=-X"
 
 ## Working with multimodule projects
 The example above is pretty handy for multimodule projects. An other option really usefull is the OUTPUT_DIR environmental variable. This variable defines where in the source tree the output will be generated. By default the image assumes ./target. If its an other directory we need to specify the option.
