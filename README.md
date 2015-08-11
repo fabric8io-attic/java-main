@@ -4,6 +4,7 @@ An image that can be used with Openshift's Source To Image in order to build Jav
 
 ##
 Usage:
+
 	sti build <git repo url> fabric8/java-main <target image name>
 	docker run <target image name>
 
