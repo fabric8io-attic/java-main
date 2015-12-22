@@ -22,14 +22,14 @@ It may be possible that the maven build needs to be customized. For example:
 
 - To invoke custom goals.
 - To skip tests.
-- To provide custom configuration to the build".
-- To build specific modules inside a multimodule project".
+- To provide custom configuration to the build.
+- To build specific modules inside a multimodule project.
 - To add debug level logging to the Maven build
 
 The `MAVEN_ARGS` environment variable can be set to change the behaviour. By
 default `MAVEN_ARGS` is set to:
 
-  package dependency:copy-dependencies -DskipTests -e
+    package dependency:copy-dependencies -DskipTests -e
 
 You can override the `MAVEN_ARGS` like in the example below we tell maven to just build the project with groupId "some.groupId" and artifactId "some.artifactId" and all its module dependencies.
 
