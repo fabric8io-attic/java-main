@@ -67,8 +67,12 @@ else
   echo "Copying binaries in source directory into $DEPLOY_DIR for later deployment..."
 fi
 
+if [ -z "$DEPLOY_FILE_MASK" ]; then
+  DEPLOY_FILE_MASK='*'
+fi
+
 if [ -d $OUTPUT_DIR ]; then
-  cp -r $OUTPUT_DIR/* $DEPLOY_DIR >& /dev/null
+  cp -r $OUTPUT_DIR/$DEPLOY_FILE_MASK $DEPLOY_DIR >& /dev/null
 fi
 
 echo "...done"
